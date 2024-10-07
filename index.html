@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Keyboard Tester</title>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <input type="text" v-model="inputString" v-on:keyup="updateButtonState" />
+      <li v-for="key in availableKeys">
+        {{ key.label }} + {{ key.isPressed }}
+      </li>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
