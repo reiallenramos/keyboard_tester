@@ -8,6 +8,7 @@
   <body>
     <div id="app" v-cloak>
       <input type="text" v-model="inputString" v-on:keyup="updateButtonState" />
+      <button @click="resetAllButtons">Reset</button>
       <li v-for="key in availableKeys">
         {{ key.label }} + {{ key.isPressed }}
       </li>

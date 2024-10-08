@@ -24,8 +24,18 @@ const vm = Vue.createApp({
       inputString: '',
     }
   },
-  
+
   methods: {
+    resetAllButtons() {
+      BUTTONS.forEach((button => button.updateState(false)));
+      this.updateButtonArray();
+      this.resetInput();
+    },
+
+    resetInput() {
+      this.inputString = '';
+    },
+
     updateButtonState(e) {
       let characterPressed = toCharacter(e.which);
       let buttonPressed = BUTTONS.find((button => button.label === characterPressed ));
