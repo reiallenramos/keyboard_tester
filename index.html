@@ -7,10 +7,10 @@
   </head>
   <body>
     <div id="app" v-cloak>
-      <input type="text" v-model="inputString" v-on:keyup="updateButtonState" />
+      <input type="text" v-model="inputString" v-on:keyup="[updateButtonState, increaseSize]" />
       <button @click="resetAllButtons">Reset</button>
-      <li v-for="key in availableKeys">
-        {{ key.label }} + {{ key.isPressed }}
+      <li v-for="key in availableKeys" :style="{ fontSize: key.size + 'px' }">
+        {{ key.label }}
       </li>
     </div>
 

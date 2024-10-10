@@ -1,11 +1,23 @@
+const DEFAULT_SIZE = 24;
+const INCREASE_IN_SIZE = 5;
+
 class Button {
   constructor(label) {
-    this.isPressed = false;
     this.label = label;
+    this.updateState(false);
+    this.resetSize();
   }
 
   updateState(state) {
     this.isPressed = state;
+  }
+
+  increaseSize() {
+    this.size += INCREASE_IN_SIZE;
+  }
+
+  resetSize() {
+    this.size = DEFAULT_SIZE;
   }
 }
 
@@ -26,8 +38,23 @@ const vm = Vue.createApp({
   },
 
   methods: {
+    findButtonObject(char) {
+      return BUTTONS.find((button => button.label === char ));
+    },
+
+    increaseSize(e) {
+      let characterPressed = toCharacter(e.which);
+      let buttonPressed = this.findButtonObject(characterPressed);
+      if (buttonPressed) {
+        buttonPressed.increaseSize();
+      }
+    },
+
     resetAllButtons() {
-      BUTTONS.forEach((button => button.updateState(false)));
+      BUTTONS.forEach((button => {
+        button.updateState(false);
+        button.resetSize();
+      }));
       this.updateButtonArray();
       this.resetInput();
     },
@@ -38,7 +65,7 @@ const vm = Vue.createApp({
 
     updateButtonState(e) {
       let characterPressed = toCharacter(e.which);
-      let buttonPressed = BUTTONS.find((button => button.label === characterPressed ));
+      let buttonPressed = this.findButtonObject(characterPressed);
       if (buttonPressed) {
         buttonPressed.updateState(true);
         this.updateButtonArray();
