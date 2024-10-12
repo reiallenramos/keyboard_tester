@@ -9,9 +9,13 @@
     <div id="app" v-cloak>
       <input type="text" v-model="inputString" v-on:keyup="[updateButtonState, increaseSize]" />
       <button @click="resetAllButtons">Reset</button>
-      <li v-for="key in availableKeys" :style="{ fontSize: key.size + 'px' }">
-        {{ key.label }}
-      </li>
+      <ul>
+        <template v-for="key in availableKeys">
+          <li v-if="key.isPressed" :style="{ fontSize: key.size + 'px' }">
+            {{ key.label }}
+          </li>
+        </template>
+      </ul>
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
