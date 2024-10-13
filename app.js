@@ -39,14 +39,23 @@ const vm = Vue.createApp({
 
   methods: {
     findButtonObject(char) {
-      return BUTTONS.find((button => button.label === char ));
+      let found = {
+        index: null,
+        buttonObject: null
+      }
+
+      const currentButtons = [...this.availableKeys];
+      found.index = currentButtons.findIndex((button => button.label === char ));
+      found.buttonObject = currentButtons[found.index];
+
+      return found;
     },
 
     increaseSize(e) {
       let characterPressed = toCharacter(e.which);
       let buttonPressed = this.findButtonObject(characterPressed);
-      if (buttonPressed) {
-        buttonPressed.increaseSize();
+      if (buttonPressed.buttonObject) {
+        buttonPressed.buttonObject.increaseSize();
       }
     },
 
@@ -63,18 +72,27 @@ const vm = Vue.createApp({
       this.inputString = '';
     },
 
+    moveButtonToFront(buttonIndex) {
+      const buttonToMove = this.availableKeys[buttonIndex];
+      const tempButtons = [...this.availableKeys];
+      tempButtons.splice(buttonIndex, 1);
+      tempButtons.splice(0, 0, buttonToMove);
+      this.availableKeys = tempButtons;
+    },
+
     updateButtonState(e) {
       let characterPressed = toCharacter(e.which);
       let buttonPressed = this.findButtonObject(characterPressed);
-      if (buttonPressed) {
-        buttonPressed.updateState(true);
+      if (buttonPressed.buttonObject) {
+        this.moveButtonToFront(buttonPressed.index);
+        buttonPressed.buttonObject.updateState(true);
         this.updateButtonArray();
       }
     },
 
     updateButtonArray() {
-      const updatedButtons = [...this.availableKeys];
-      this.availableKeys = updatedButtons;
+      const tempButtons = [...this.availableKeys];
+      this.availableKeys = tempButtons;
     }
   }
 }).mount('#app')

@@ -10,9 +10,9 @@
       <input type="text" v-model="inputString" v-on:keyup="[updateButtonState, increaseSize]" />
       <button @click="resetAllButtons">Reset</button>
       <ul>
-        <template v-for="key in availableKeys">
-          <li v-if="key.isPressed" :style="{ fontSize: key.size + 'px' }">
-            {{ key.label }}
+        <template v-for="button in availableKeys" :key="button.label">
+          <li v-if="button.isPressed" :style="{ fontSize: button.size + 'px' }">
+            {{ button.label }}
           </li>
         </template>
       </ul>
